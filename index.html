@@ -1,0 +1,22 @@
+<html>
+<head>
+ <meta charset="UTF-8"> 
+</head>
+<body>
+<script language="javascript">
+var text;
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://127.0.0.1:8000/library');
+xhr.onload = function(e) {
+  var data = JSON.parse(this.response);
+  
+  for (i = 0; i < data.books.length; i++) {
+    text += data.books[i].name + "<br>";
+  }
+}
+xhr.send();
+document.write(text);
+</script>
+</body>
+</html>
+ 
