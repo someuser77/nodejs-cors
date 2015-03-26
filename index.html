@@ -1,22 +1,53 @@
+<!DOCTYPE html>
 <html>
 <head>
  <meta charset="UTF-8"> 
+ 
+ <script language="javascript">
+
+  function printBookList() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8000/library');
+    xhr.onload = function(e) {
+      var text = "";
+      var data = JSON.parse(this.response);
+      
+      for (var i = 0; i < data.books.length; i++) {
+	text += data.books[i].name + "<br />";
+      }
+      document.getElementById('bookList').innerHTML = text;
+    }
+    xhr.send();
+  }
+
+  function addBook() {
+	var book = JSON.stringify({name: "ccc", author: "zzz"});
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'http://127.0.0.1:8000/library');
+	xhr.setRequestHeader("Content-Type", "text/plain");
+	xhr.setRequestHeader("Content-Length", book.length);
+	//xhr.setRequestHeader("Connection", "close");
+	
+	
+	xhr.onreadystatechange = function(){
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			alert("OK");
+		}
+		else {
+		}
+	}
+	xhr.send(book);
+	document.getElementById('bookList').innerHTML = "Sent...";
+  }
+
+</script>
 </head>
 <body>
-<script language="javascript">
-var text;
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://127.0.0.1:8000/library');
-xhr.onload = function(e) {
-  var data = JSON.parse(this.response);
-  
-  for (i = 0; i < data.books.length; i++) {
-    text += data.books[i].name + "<br>";
-  }
-}
-xhr.send();
-document.write(text);
-</script>
+
+<button type="button" onClick='printBookList()'>Print book list</button>
+<button type="button" onClick='addBook()'>Add book</button>
+<div id='bookList'></div>
+<div id='status'></div>
 </body>
 </html>
  
