@@ -11,6 +11,7 @@ var server = http.createServer(function (request, response) {
   response.setHeader('Access-Control-Allow-Methods', '*');
   response.setHeader('Access-Control-Allow-Headers', '*');
   
+  // POST CORS first send OPTIONS
   if ( request.method === 'OPTIONS' ) {
     response.writeHead(200);
     response.end();
